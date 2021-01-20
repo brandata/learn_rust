@@ -1,5 +1,11 @@
 #[allow(unused_variables)]
 
+#[derive(Debug, Clone, Copy)]
+struct DougsStruct {
+    a: i32,
+    b: f64,
+}
+
 fn main() {
     // STACK
     // - fast memory creation and retrieval
@@ -81,6 +87,55 @@ fn main() {
     heap_procedure(&heap_f64);
     println!("In main stack {}", heap_f64);
 
+
+    //////////// STRINGS ////////////////////////
+    // They are always on the heap
+    let some_string: String = String::from("Hello");
+    // - str slice not locked to start or heap
+    // - pointer to some one elses memory location, string 
+    // slice is borrowing it. It borrows and points to original
+    // memory
+    let some_str: &str = "There";
+
+    // after this function is called, some_string will be unavailable unless it is borrowed with &
+    some_procedure(&some_string, some_str);
+
+
+    // - heap data can only have 1 owner at a time, but can
+    // have many references if the variable is mutable or 
+    // doesnt change
+    let var_a = String::from("Hello!");
+    let var_b = &var_a;
+    let var_c = &var_a;
+    // var_a maintains ownership, b and c are read only 
+    println!("{} {} {}", var_a, var_b, var_c);
+
+    let var_d = String::from("Hello");
+    let var_e = String::from("there");
+
+    let mass_data: Vec<&String> = vec![&var_d, &var_e];
+
+    println!("{}", heavy_calcs(&mass_data));
+
+    println!("{} {}", var_d, var_e);
+
+    // structs
+    // dougs struct contains stack variables
+    let var_1 = DougsStruct { a: 9, b: 10. };
+    // there is no copy of the data to param_a like with normal
+    // stack variables (struct could be huge)
+    some_struct_proc(&var_1);
+    // this wont work!
+    //
+    // need to use a borrowed reference or clone it or copy
+    println!("{:?}", var_1);
+
+}
+
+fn heavy_calcs(_param: &Vec<&String>) -> i64 {
+    // some heavy duty cales
+    
+    10
 }
 
 fn stack_procedure(param: f64) {
@@ -89,4 +144,12 @@ fn stack_procedure(param: f64) {
 
 fn heap_procedure(param: &Box<f64>) {
     println!("In heap_procedure with param {}", param);
+}
+
+fn some_procedure(param_a: &String, param_b: &str) {
+    println!("{} {}", param_a, param_b);
+}
+
+fn some_struct_proc(param_a: &DougsStruct) {
+    println!("{:?}", param_a);
 }
