@@ -4,6 +4,7 @@ use web_sys::*;
 use web_sys::WebGlRenderingContext as GL;
 
 mod gl_setup;
+mod programs;
 mod shaders;
 
 #[wasm_bindgen]
