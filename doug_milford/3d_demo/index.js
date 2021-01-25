@@ -8,9 +8,6 @@ rust.then(m => {
         return;
     }
 
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
     const FPS_THROTTLE = 1000.0 / 30.0; // ms / frames
     var lastDrawTime = -1; // in ms
     const dougsClient = new m.DougsClient();

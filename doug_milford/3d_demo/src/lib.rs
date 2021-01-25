@@ -1,5 +1,10 @@
 extern crate wasm_bindgen;
 use wasm_bindgen::prelude::*;
+use web_sys::*;
+use web_sys::WebGlRenderingContext as GL;
+
+mod gl_setup;
+mod shaders;
 
 #[wasm_bindgen]
 extern "C" {
@@ -14,16 +19,18 @@ pub fn say_hello_from_rust() {
 
 #[wasm_bindgen]
 pub struct DougsClient {
-
+    gl:WebGlRenderingContext,
 }
 
 #[wasm_bindgen]
 impl DougsClient {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
-        log("New was hit!");
-        Self {
+        console_error_panic_hook::set_once();
+        let gl = gl_setup::initialize_webgl_context().unwrap();
 
+        Self {
+            gl: gl,
         }
     }
 
@@ -32,6 +39,6 @@ impl DougsClient {
     }
 
     pub fn render(&self) {
-        
+        self.gl.clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
     }
 }
