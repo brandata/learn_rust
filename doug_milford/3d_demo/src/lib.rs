@@ -3,6 +3,7 @@ use wasm_bindgen::prelude::*;
 use web_sys::*;
 use web_sys::WebGlRenderingContext as GL;
 
+mod common_funcs;
 mod gl_setup;
 mod programs;
 mod shaders;
@@ -21,6 +22,7 @@ pub fn say_hello_from_rust() {
 #[wasm_bindgen]
 pub struct DougsClient {
     gl:WebGlRenderingContext,
+    program_color_2d: programs::Color2D,
 }
 
 #[wasm_bindgen]
@@ -31,6 +33,7 @@ impl DougsClient {
         let gl = gl_setup::initialize_webgl_context().unwrap();
 
         Self {
+            program_color_2d: programs::Color2D::new(&gl),
             gl: gl,
         }
     }
@@ -41,5 +44,15 @@ impl DougsClient {
 
     pub fn render(&self) {
         self.gl.clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
+
+        self.program_color_2d.render(
+            &self.gl,
+            0., //bottom
+            10., //top
+            0., //left
+            10., //right
+            10., //canvas height
+            10., //canvas width
+        )
     }
 }
