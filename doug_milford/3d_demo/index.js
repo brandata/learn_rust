@@ -8,6 +8,7 @@ rust.then(m => {
         return;
     }
 
+    // Client and parameters for rendering
     const FPS_THROTTLE = 1000.0 / 30.0; // ms / frames
     var lastDrawTime = -1; // in ms
     const dougsClient = new m.DougsClient();
