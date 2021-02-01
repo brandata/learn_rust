@@ -3,6 +3,8 @@ const canvas = document.getElementById('rustCanvas');
 const gl = canvas.getContext('webgl', {antialias: true});
 
 rust.then(m => {
+
+    // Check to see if webgl has be initailized
     if (!gl) {
         alert('Faied to intialize WebGL');
         return;
@@ -14,6 +16,7 @@ rust.then(m => {
     const dougsClient = new m.DougsClient();
     const initialTime = Date.now();
 
+    // Render function
     function render() {
         window.requestAnimationFrame(render);
         const currTime = Date.now()
