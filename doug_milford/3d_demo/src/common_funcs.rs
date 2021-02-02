@@ -1,6 +1,7 @@
 use web_sys::*;
 use web_sys::WebGlRenderingContext as GL;
 
+// Link program with shaders
 pub fn link_program(
     gl: &WebGlRenderingContext,
     vert_source: &str,
@@ -37,6 +38,7 @@ pub fn link_program(
     }
 }
 
+// Compile all shaders
 fn compile_shader(
     gl: &WebGlRenderingContext,
     shader_type: u32,
@@ -59,6 +61,7 @@ fn compile_shader(
     }
 }
 
+// Hard coded translation matrix
 pub fn translation_matrix(tx:f32, ty: f32, tz: f32) -> [f32; 16] {
     let mut return_var = [0.; 16];
 
@@ -74,6 +77,7 @@ pub fn translation_matrix(tx:f32, ty: f32, tz: f32) -> [f32; 16] {
     return_var
 }
 
+// Hard coded scaling matrix
 pub fn scaling_matrix(sx: f32, sy: f32, sz: f32) -> [f32; 16] {
     let mut return_var = [0.; 16];
     
